@@ -35,3 +35,18 @@ feature "About page" do
     expect(page).to have_title("Ruby on Rails Tutorials Sample App | About")
   end
 end
+
+feature "Contact page" do
+  scenario "should have the content 'Contact'" do 
+    visit '/static_pages/contact'
+    expect(page).to have_text('contact')
+  end
+
+  scenario "should have title 'Contact'" do
+    visit '/static_pages/contact'
+    expect(page).to have_title("Ruby on Rails Tutorials Sample App | Contact")
+  end
+end
+
+
+
