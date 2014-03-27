@@ -6,10 +6,16 @@ feature "Home page" do
     expect(page).to have_text('Sample App')
   end
 
-  scenario "should have title 'Home'" do
+  scenario "should have base title" do
     visit '/static_pages/home'
-    expect(page).to have_title("Ruby on Rails Tutorials Sample App | Home")
+    expect(page).to have_title("Ruby on Rails Tutorial Sample App")
   end
+
+  scenario "should not have custom page title" do
+    visit '/static_pages/home'
+    expect(page).not_to have_title("| Home")
+  end
+  
 end
 
 feature "Help page" do
@@ -20,7 +26,7 @@ feature "Help page" do
 
   scenario "should have title 'Help'" do
     visit '/static_pages/help'
-    expect(page).to have_title("Ruby on Rails Tutorials Sample App | Help")
+    expect(page).to have_title("Ruby on Rails Tutorial Sample App | Help")
   end
 end
 
@@ -32,7 +38,7 @@ feature "About page" do
 
   scenario "should have title 'About'" do
     visit '/static_pages/about'
-    expect(page).to have_title("Ruby on Rails Tutorials Sample App | About")
+    expect(page).to have_title("Ruby on Rails Tutorial Sample App | About")
   end
 end
 
@@ -44,7 +50,7 @@ feature "Contact page" do
 
   scenario "should have title 'Contact'" do
     visit '/static_pages/contact'
-    expect(page).to have_title("Ruby on Rails Tutorials Sample App | Contact")
+    expect(page).to have_title("Ruby on Rails Tutorial Sample App | Contact")
   end
 end
 
