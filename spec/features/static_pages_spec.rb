@@ -1,67 +1,58 @@
 require 'spec_helper'
 
-feature "Home page" do
+describe "Static pages" do 
 
-  background {visit root_path}
   subject {page}
 
-  scenario "should have the content 'Sample App'" do 
-    should have_content('Sample App')
+  shared_examples_for "all static pages" do 
+    it { should have_selector('h1', text: heading) }
+    it { should have_title(full_title(page_title)) }
   end
 
-  scenario "should have base title" do
-    should have_title(full_title(""))
+  describe "Home page" do 
+    before { visit root_path }
+
+    let (:heading)    { 'Sample App' }
+    let (:page_title) { '' }
+
+    it_should_behave_like "all static pages"
+    it { should_not have_title('| Home') }
   end
 
-  scenario "should not have custom page title" do
-    should_not have_title("| Home")
+  describe "About page" do 
+    before { visit about_path }
+
+    let (:heading)    { 'About' }
+    let (:page_title) { 'About' }
+
+    it_should_behave_like "all static pages"
   end
-  
+
+  describe "Contact page" do 
+    before { visit contact_path }
+
+    let (:heading)    { 'Contact' }
+    let (:page_title) { 'Contact' }
+
+    it_should_behave_like "all static pages"
+  end
+
+  it "should have the right links on the layout" do 
+    visit root_path
+
+    click_link "About"
+    should have_title(full_title('About'))    
+
+    click_link "Help"
+    should have_title(full_title('Help'))    
+
+    click_link "Contact"
+    should have_title(full_title('Contact'))    
+
+    click_link "Home"
+    
+    click_link "Sign up now!"
+    should have_title(full_title('Sign up'))
+  end
+
 end
-
-feature "Help page" do
-
-  background {visit help_path}
-  subject{page}
-
-  scenario "should have the content 'Help'" do 
-    should have_content('Help')
-  end
-
-  scenario "should have title 'Help'" do
-    should have_title(full_title("Help"))
-  end
-end
-
-feature "About page" do
-
-  background {visit about_path}
-  subject{page}
-
-  scenario "should have the content 'About'" do 
-    should have_content('About')
-  end
-
-  scenario "should have title 'About'" do
-    should have_title(full_title("About"))
-  end
-end
-
-feature "Contact page" do
-
-  background { visit contact_path }
-  subject{page}
-
-  scenario "should have the content 'Contact'" do 
-    should have_content('contact')
-  end
-
-  scenario "should have title 'Contact'" do
-    should have_title(full_title("Contact"))
-  end
-end
-
-
-
-
-
